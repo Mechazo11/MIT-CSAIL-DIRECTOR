@@ -11,6 +11,8 @@ Introduction
 This README describes how to download and build the Director source code
 and how to satisfy 3rd party dependencies.
 
+* Update: 08/30/24: Updated dependencies for compatibility with Ubuntu 22.04. Check the `BUILD_UBUNTU_22.md` file for more details
+
 Background
 ----------
 
@@ -65,9 +67,10 @@ The required 3rd party dependencies are:
 
   - Qt4 or Qt5 (Qt 4.8.7 recommended)
   - VTK 6.2+ (VTK 7.1.1 recommended)
-  - Python 3.4+ and NumPy
+  - Python 3.7+ and NumPy
+  - Cmake 3.8+
 
-Additionally, you will need CMake 2.8 or greater to configure the source code.
+Additionally, you will need CMake 3.8 or greater to configure the source code.
 
 The dependencies can be installed on Mac using `Homebrew <http://brew.sh/>`_:
 

@@ -1,0 +1,19 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/icore-az/ros2_ws/install/ros2_tictoc_profiler/local/lib/python3.10/dist-packages",
+        "/home/icore-az/ros2_ws/build/py_obj_detector_yolov5_ros2",
+        "/home/icore-az/ros2_ws/install/py_obj_detector_yolov5_ros2/lib/python3.10/site-packages",
+        "/home/icore-az/ros2_ws/install/matimg_custom_msg_interface/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/icore-az/ros2_ws/install/ros2_tictoc_profiler/local/lib/python3.10/dist-packages",
+        "/home/icore-az/ros2_ws/build/py_obj_detector_yolov5_ros2",
+        "/home/icore-az/ros2_ws/install/py_obj_detector_yolov5_ros2/lib/python3.10/site-packages",
+        "/home/icore-az/ros2_ws/install/matimg_custom_msg_interface/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "ros.distro": "humble"
+}

@@ -16,9 +16,9 @@ option(USE_SYSTEM_EIGEN "Use system version of eigen.  If off, eigen will be bui
 option(USE_SYSTEM_LCM "Use system version of lcm.  If off, lcm will be built." OFF)
 option(USE_SYSTEM_LIBBOT "Use system version of libbot.  If off, libbot will be built." OFF)
 option(USE_SYSTEM_PCL "Use system version of pcl.  If off, pcl will be built." OFF)
-option(USE_SYSTEM_VTK "Use system version of VTK.  If off, VTK will be built." ON)
+option(USE_SYSTEM_VTK "Use system version of VTK.  If off, VTK will be built." OFF)
 if(NOT USE_SYSTEM_VTK AND NOT APPLE)
-  option(USE_PRECOMPILED_VTK "Download and use precompiled VTK.  If off, VTK will be compiled from source." ON)
+  option(USE_PRECOMPILED_VTK "Download and use precompiled VTK.  If off, VTK will be compiled from source." OFF)
 endif()
 
 option(BUILD_SHARED_LIBS "Build director and externals with shared libraries." ON)
@@ -312,83 +312,124 @@ ExternalProject_Add(QtPropertyBrowser
     ${qt_args}
   )
 
+# OLD vtk include, depricated in favor of vtk==9.3.1
+# ###############################################################################
+# # vtk
+
+# if(USE_SYSTEM_VTK)
+
+#   if(APPLE)
+#     set(vtk_homebrew_dir /usr/local/opt/vtk7/lib/cmake/vtk-7.1)
+#   endif()
+
+#   find_package(VTK REQUIRED PATHS ${vtk_homebrew_dir})
+#   if (VTK_VERSION VERSION_LESS 6.2)
+#     message(FATAL_ERROR "Director requires VTK version 6.2 or greater."
+#       " System has VTK version ${VTK_VERSION}")
+#   endif()
+#   check_vtk_qt_version()
+
+#   set(vtk_args -DVTK_DIR:PATH=${VTK_DIR})
+
+# # Depricated
+# elseif(USE_PRECOMPILED_VTK)
+
+#   set(url_base "http://patmarion.com/bottles")
+
+#   get_ubuntu_version()
+#   if (ubuntu_version EQUAL 14.04)
+#     if(DD_QT_VERSION EQUAL 4)
+#       set(vtk_package_url ${url_base}/vtk7.1-qt4.8-python3.4-ubuntu14.04.tar.gz)
+#       set(vtk_package_md5 5e9b52be15dccadefdd033c58f055705)
+#       set(vtk_package_version 7.1)
+#     else()
+#       message(FATAL_ERROR "Compiling director with Qt5 is not supported on Ubuntu 14.04. "
+#                "Please set DD_QT_VERSION to 4.")
+#     endif()
+#   elseif(ubuntu_version EQUAL 16.04)
+#     if(DD_QT_VERSION EQUAL 4)
+#       set(vtk_package_url ${url_base}/vtk7.1-qt4.8-python3.5-ubuntu16.04.tar.gz)
+#       set(vtk_package_md5 185e718e13ef532e3af4a80397091058)
+#       set(vtk_package_version 7.1)
+#     else()
+#       set(vtk_package_url ${url_base}/vtk7.1-qt5.5-python3.5-ubuntu16.04.tar.gz)
+#       set(vtk_package_md5 00000000000000000000000000000000)
+#       set(vtk_package_version 7.1)
+#     endif()
+#   elseif(ubuntu_version EQUAL 18.04)
+#     if(DD_QT_VERSION EQUAL 4)
+#       message(FATAL_ERROR "Compiling director with Qt4 is not supported on Ubuntu 18.04. "
+#                "Please set DD_QT_VERSION to 5.")
+#     else()
+#       set(vtk_package_url ${url_base}/vtk8.2-qt5.9-python3.6-ubuntu18.04.tar.gz)
+#       set(vtk_package_md5 b1c30e3fc0fdd918aed46e07a6b19426)
+#       set(vtk_package_version 8.2)
+
+#     endif()
+#   else()
+#     message(FATAL_ERROR "USE_PRECOMPILED_VTK requires Ubuntu 14.04, 16.04, or 18.04, "
+#             "but the detected system version does not match. "
+#             "Please disable USE_PRECOMPILED_VTK.")
+#   endif()
+
+#   ExternalProject_Add(vtk-precompiled
+#     URL ${vtk_package_url}
+#     URL_MD5 ${vtk_package_md5}
+#     CONFIGURE_COMMAND ""
+#     BUILD_COMMAND ""
+#     INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory
+#       ${source_prefix}/vtk-precompiled ${install_prefix}
+#   )
+
+#   set(vtk_args -DVTK_DIR:PATH=${install_prefix}/lib/cmake/vtk-${vtk_package_version})
+#   set(vtk_depends vtk-precompiled)
+
+# else()
+
+#   ExternalProject_Add(vtk
+#     GIT_REPOSITORY git://vtk.org/VTK.git
+#     GIT_TAG v8.2.0
+
+#     CMAKE_CACHE_ARGS
+#       ${default_cmake_args}
+#       ${python_args}
+#       ${qt_args}
+#       -DBUILD_TESTING:BOOL=OFF
+#       -DBUILD_EXAMPLES:BOOL=OFF
+#       -DVTK_RENDERING_BACKEND:STRING=OpenGL2
+#       -DVTK_QT_VERSION:STRING=${DD_QT_VERSION}
+#       -DVTK_PYTHON_VERSION:STRING=3
+#       -DModule_vtkGUISupportQt:BOOL=ON
+#       -DVTK_WRAP_PYTHON:BOOL=ON
+#     )
+
+#   set(vtk_args -DVTK_DIR:PATH=${install_prefix}/lib/cmake/vtk-8.2)
+#   set(vtk_depends vtk)
+
+# endif()
+
+# ###############################################################################
 
 ###############################################################################
 # vtk
 
 if(USE_SYSTEM_VTK)
 
-  if(APPLE)
-    set(vtk_homebrew_dir /usr/local/opt/vtk7/lib/cmake/vtk-7.1)
-  endif()
-
-  find_package(VTK REQUIRED PATHS ${vtk_homebrew_dir})
-  if (VTK_VERSION VERSION_LESS 6.2)
-    message(FATAL_ERROR "Director requires VTK version 6.2 or greater."
-      " System has VTK version ${VTK_VERSION}")
+  find_package(VTK REQUIRED)
+  if (VTK_VERSION VERSION_LESS 9.3)
+    message(FATAL_ERROR "Director requires VTK version 9.3 or greater. "
+      "System has VTK version ${VTK_VERSION}")
   endif()
   check_vtk_qt_version()
 
   set(vtk_args -DVTK_DIR:PATH=${VTK_DIR})
 
-# Depricated
-elseif(USE_PRECOMPILED_VTK)
-
-  set(url_base "http://patmarion.com/bottles")
-
-  get_ubuntu_version()
-  if (ubuntu_version EQUAL 14.04)
-    if(DD_QT_VERSION EQUAL 4)
-      set(vtk_package_url ${url_base}/vtk7.1-qt4.8-python3.4-ubuntu14.04.tar.gz)
-      set(vtk_package_md5 5e9b52be15dccadefdd033c58f055705)
-      set(vtk_package_version 7.1)
-    else()
-      message(FATAL_ERROR "Compiling director with Qt5 is not supported on Ubuntu 14.04. "
-               "Please set DD_QT_VERSION to 4.")
-    endif()
-  elseif(ubuntu_version EQUAL 16.04)
-    if(DD_QT_VERSION EQUAL 4)
-      set(vtk_package_url ${url_base}/vtk7.1-qt4.8-python3.5-ubuntu16.04.tar.gz)
-      set(vtk_package_md5 185e718e13ef532e3af4a80397091058)
-      set(vtk_package_version 7.1)
-    else()
-      set(vtk_package_url ${url_base}/vtk7.1-qt5.5-python3.5-ubuntu16.04.tar.gz)
-      set(vtk_package_md5 00000000000000000000000000000000)
-      set(vtk_package_version 7.1)
-    endif()
-  elseif(ubuntu_version EQUAL 18.04)
-    if(DD_QT_VERSION EQUAL 4)
-      message(FATAL_ERROR "Compiling director with Qt4 is not supported on Ubuntu 18.04. "
-               "Please set DD_QT_VERSION to 5.")
-    else()
-      set(vtk_package_url ${url_base}/vtk8.2-qt5.9-python3.6-ubuntu18.04.tar.gz)
-      set(vtk_package_md5 b1c30e3fc0fdd918aed46e07a6b19426)
-      set(vtk_package_version 8.2)
-
-    endif()
-  else()
-    message(FATAL_ERROR "USE_PRECOMPILED_VTK requires Ubuntu 14.04, 16.04, or 18.04, "
-            "but the detected system version does not match. "
-            "Please disable USE_PRECOMPILED_VTK.")
-  endif()
-
-  ExternalProject_Add(vtk-precompiled
-    URL ${vtk_package_url}
-    URL_MD5 ${vtk_package_md5}
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory
-      ${source_prefix}/vtk-precompiled ${install_prefix}
-  )
-
-  set(vtk_args -DVTK_DIR:PATH=${install_prefix}/lib/cmake/vtk-${vtk_package_version})
-  set(vtk_depends vtk-precompiled)
-
 else()
 
   ExternalProject_Add(vtk
-    GIT_REPOSITORY git://vtk.org/VTK.git
-    GIT_TAG v8.2.0
+    # GIT_REPOSITORY git://vtk.org/VTK.git
+    GIT_REPOSITORY https://github.com/Kitware/VTK
+    GIT_TAG v9.3.1
 
     CMAKE_CACHE_ARGS
       ${default_cmake_args}
@@ -403,14 +444,14 @@ else()
       -DVTK_WRAP_PYTHON:BOOL=ON
     )
 
-  set(vtk_args -DVTK_DIR:PATH=${install_prefix}/lib/cmake/vtk-8.2)
+  set(vtk_args -DVTK_DIR:PATH=${install_prefix}/lib/cmake/vtk-9.3)
   set(vtk_depends vtk)
 
 endif()
 
-
-
 ###############################################################################
+
+
 # pcl, flann
 
 if(USE_PCL AND NOT USE_SYSTEM_PCL)

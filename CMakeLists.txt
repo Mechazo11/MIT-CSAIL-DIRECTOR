@@ -34,7 +34,7 @@ option(BUILD_SHARED_LIBS "Build director with shared libraries." ON)
 option(BUILD_TESTING "Build director with tests enabled." ON)
 
 # include cmake scripts
-include(cmake/dd-macros.cmake)
+include(cmake/dd-macros.cmake) # Brings in all dependencies
 include(cmake/dd-testing.cmake)
 
 # dependency options
@@ -50,7 +50,8 @@ option(USE_OCTOMAP "Build director with octomap dependency." OFF)
 option(USE_COLLECTIONS "Build director with collections dependency." OFF)
 option(USE_PERCEPTION "Build director features that require OpenCV, PCL, cv-utils, and libbot as dependencies." OFF)
 
-use_cpp11()
+#use_cpp11()
+use_cpp14()
 setup_qt()
 setup_python()
 setup_pkg_config_path()

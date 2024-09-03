@@ -7,7 +7,8 @@ if(NOT VTK_WRAP_PYTHON)
   message(FATAL_ERROR "VTK was built without Python enabled (VTK_WRAP_PYTHON=FALSE).")
 endif()
 
-include(${VTK_CMAKE_DIR}/vtkWrapPython.cmake)
+# include(${VTK_CMAKE_DIR}/vtkWrapPython.cmake) # Throws could not include error
+include(${VTK_CMAKE_DIR}/vtkModuleWrapPython.cmake)
 function(wrap_python library_name sources)
   vtk_wrap_python3(${library_name}Python generated_python_sources "${sources}")
   add_library(${library_name}PythonD ${generated_python_sources})

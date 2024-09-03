@@ -12,7 +12,7 @@ option(USE_STANDALONE_LCMGL "Build with standalone bot-lcmgl." OFF)
 option(USE_PERCEPTION "Build director features that require OpenCV, PCL, cv-utils, and libbot as dependencies." OFF)
 option(USE_ROS "Build components that depend on ROS." OFF)
 
-option(USE_SYSTEM_EIGEN "Use system version of eigen.  If off, eigen will be built." OFF)
+option(USE_SYSTEM_EIGEN "Use system version of eigen.  If off, eigen will be built." ON)
 option(USE_SYSTEM_LCM "Use system version of lcm.  If off, lcm will be built." OFF)
 option(USE_SYSTEM_LIBBOT "Use system version of libbot.  If off, libbot will be built." OFF)
 option(USE_SYSTEM_PCL "Use system version of pcl.  If off, pcl will be built." OFF)
@@ -76,14 +76,15 @@ else()
     )
 endif()
 
-set(min_python_version 3.4)
+#set(min_python_version 3.4)
+set(min_python_version 3.10)
 find_package(PythonInterp ${min_python_version} REQUIRED)
 find_package(PythonLibs ${min_python_version} REQUIRED)
 
 set(python_args
   -DPYTHON_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
   -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
-  -DPYTHON_INCLUDE_DIR2:PATH=${PYTHON_INCLUDE_DIR} # required for cmake 2.8 on ubuntu 14.04
+  #-DPYTHON_INCLUDE_DIR2:PATH=${PYTHON_INCLUDE_DIR} # required for cmake 2.8 on ubuntu 14.04
   -DPYTHON_LIBRARY:PATH=${PYTHON_LIBRARY}
   )
 
@@ -257,7 +258,9 @@ endif()
 if(DD_QT_VERSION EQUAL 4)
   set(PythonQt_TAG patched-6)
 else()
-  set(PythonQt_TAG patched-8)
+  #set(PythonQt_TAG patched-8)
+  # patched-9 is compatible with Python 3.10
+  set(PythonQt_TAG patched-9)
 endif()
 
 ExternalProject_Add(PythonQt

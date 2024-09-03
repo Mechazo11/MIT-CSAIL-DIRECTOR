@@ -13,6 +13,8 @@ and how to satisfy 3rd party dependencies.
 
 * Update: 08/30/24: Updated dependencies for compatibility with Ubuntu 22.04. Check the `BUILD_UBUNTU_22.md` file for more details
 
+* Update: Updated build, installation and usage instruction here: https://github.com/Mechazo11/MIT-CSAIL-DIRECTOR/tree/ubuntu2204_build
+
 Background
 ----------
 

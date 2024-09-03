@@ -16,7 +16,7 @@ option(USE_SYSTEM_EIGEN "Use system version of eigen.  If off, eigen will be bui
 option(USE_SYSTEM_LCM "Use system version of lcm.  If off, lcm will be built." OFF)
 option(USE_SYSTEM_LIBBOT "Use system version of libbot.  If off, libbot will be built." OFF)
 option(USE_SYSTEM_PCL "Use system version of pcl.  If off, pcl will be built." OFF)
-option(USE_SYSTEM_VTK "Use system version of VTK.  If off, VTK will be built." OFF)
+option(USE_SYSTEM_VTK "Use system version of VTK.  If off, VTK will be built." ON)
 if(NOT USE_SYSTEM_VTK AND NOT APPLE)
   option(USE_PRECOMPILED_VTK "Download and use precompiled VTK.  If off, VTK will be compiled from source." ON)
 endif()
@@ -328,6 +328,7 @@ if(USE_SYSTEM_VTK)
 
   set(vtk_args -DVTK_DIR:PATH=${VTK_DIR})
 
+# Depricated
 elseif(USE_PRECOMPILED_VTK)
 
   set(url_base "http://patmarion.com/bottles")

@@ -1,6 +1,8 @@
 
-message(STATUS "VTK_DIR: ${VTK_DIR}")
-message(STATUS "VTK_CMAKE_DIR: ${VTK_CMAKE_DIR}")
+# Needs to be manually set
+set(VTK_CMAKE_DIR "${VTK_DIR}") # VTK_DIR points to its lib/cmake/vtk-9.3 file
+#message(STATUS "VTK_DIR: ${VTK_DIR}")
+#message(STATUS "VTK_CMAKE_DIR: ${VTK_DIR}")
 
 if(NOT DEFINED VTK_CMAKE_DIR)
   message(SEND_ERROR "VTK_CMAKE_DIR is not defined, cannot load vtkWrapPython.cmake")
@@ -12,6 +14,7 @@ endif()
 
 #include(${VTK_CMAKE_DIR}/vtkWrapPython.cmake) # VTK==7.1.1
 include(${VTK_CMAKE_DIR}/vtkModuleWrapPython.cmake) # VTK>=8.9
+
 function(wrap_python library_name sources)
   
   vtk_wrap_python3(${library_name}Python generated_python_sources "${sources}")

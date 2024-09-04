@@ -18,7 +18,7 @@ option(USE_SYSTEM_LIBBOT "Use system version of libbot.  If off, libbot will be 
 option(USE_SYSTEM_PCL "Use system version of pcl.  If off, pcl will be built." OFF)
 option(USE_SYSTEM_VTK "Use system version of VTK.  If off, VTK will be built." OFF)
 if(NOT USE_SYSTEM_VTK AND NOT APPLE)
-  option(USE_PRECOMPILED_VTK "Download and use precompiled VTK.  If off, VTK will be compiled from source." OFF)
+  option(USE_PRECOMPILED_VTK "Download and use precompiled VTK.  If off, VTK will be compiled from source." OFF) 
 endif()
 
 option(BUILD_SHARED_LIBS "Build director and externals with shared libraries." ON)
@@ -317,8 +317,8 @@ ExternalProject_Add(QtPropertyBrowser
 
 if(USE_SYSTEM_VTK)
   find_package(VTK REQUIRED)
-  if (VTK_VERSION VERSION_LESS 9.1)
-    message(FATAL_ERROR "Director requires VTK version 9.3 or greater. "
+  if (VTK_VERSION VERSION_LESS 8.0)
+    message(FATAL_ERROR "Director requires VTK version 8.0 or greater. "
       "System has VTK version ${VTK_VERSION}")
   endif()
   check_vtk_qt_version()
@@ -330,7 +330,7 @@ else()
   ExternalProject_Add(vtk
     # GIT_REPOSITORY git://vtk.org/VTK.git
     GIT_REPOSITORY https://github.com/Kitware/VTK
-    GIT_TAG v9.1.0
+    GIT_TAG v9.3.0
 
     CMAKE_CACHE_ARGS
       ${default_cmake_args}
@@ -345,7 +345,7 @@ else()
       -DVTK_WRAP_PYTHON:BOOL=ON
     )
 
-  set(vtk_args -DVTK_DIR:PATH=${install_prefix}/lib/cmake/vtk-9.1)
+  set(vtk_args -DVTK_DIR:PATH=${install_prefix}/lib/cmake/vtk-9.3)
   set(vtk_depends vtk)
 
 endif()

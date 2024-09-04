@@ -25,6 +25,4 @@ else()
   mark_as_advanced(CMAKE_INSTALL_PREFIX)
 endif()
 
-set(VTK_DIR "/home/tigerwife/.local/lib/python3.10/site-packages/cmake/vtk-9.3")
-
 include(cmake/externals.cmake)

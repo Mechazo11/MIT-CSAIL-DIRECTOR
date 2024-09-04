@@ -1,4 +1,7 @@
 
+message(STATUS "VTK_DIR: ${VTK_DIR}")
+message(STATUS "VTK_CMAKE_DIR: ${VTK_CMAKE_DIR}")
+
 if(NOT DEFINED VTK_CMAKE_DIR)
   message(SEND_ERROR "VTK_CMAKE_DIR is not defined, cannot load vtkWrapPython.cmake")
 endif()

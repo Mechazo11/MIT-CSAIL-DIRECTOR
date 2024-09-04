@@ -1,7 +1,10 @@
+# Cmake for DRCFilters library
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 find_package(OpenGL REQUIRED)
+
+find_package(VTK REQUIRED) # VTK should be found out here
 
 find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})
@@ -214,7 +217,10 @@ if(NOT VTK_WRAP_PYTHON)
 endif()
 
 include_directories(${PYTHON_INCLUDE_DIR})
+
+# VTK_CMAKE_DIR is not found here
 include(${CMAKE_SOURCE_DIR}/cmake/wrap-python.cmake)
+
 add_custom_target(${library_name}Hierarchy)
 wrap_python(${library_name} "${sources}")
 set_target_properties(${library_name}Python

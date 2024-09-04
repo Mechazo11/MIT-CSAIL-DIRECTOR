@@ -317,8 +317,8 @@ ExternalProject_Add(QtPropertyBrowser
 
 if(USE_SYSTEM_VTK)
   find_package(VTK REQUIRED)
-  if (VTK_VERSION VERSION_LESS 8.0)
-    message(FATAL_ERROR "Director requires VTK version 8.0 or greater. "
+  if (VTK_VERSION VERSION_LESS 9.0)
+    message(FATAL_ERROR "Director requires VTK version 9.0 or greater. "
       "System has VTK version ${VTK_VERSION}")
   endif()
   check_vtk_qt_version()

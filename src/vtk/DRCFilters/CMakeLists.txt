@@ -222,7 +222,11 @@ include_directories(${PYTHON_INCLUDE_DIR})
 include(${CMAKE_SOURCE_DIR}/cmake/wrap-python.cmake)
 
 add_custom_target(${library_name}Hierarchy)
-wrap_python(${library_name} "${sources}")
+
+#wrap_python(${library_name} "${sources}") # "${sources}" may be interpreted as one string
+wrap_python(${library_name} ${sources})
+
+
 set_target_properties(${library_name}Python
   PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${DD_INSTALL_PYTHON_DIR}/director")
 target_link_libraries(${library_name}Python ${PYTHON_LIBRARIES})

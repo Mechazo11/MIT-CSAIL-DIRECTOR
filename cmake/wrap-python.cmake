@@ -39,28 +39,29 @@ include(${VTK_CMAKE_DIR}/vtkModuleWrapPython.cmake) # VTK>=8.9
 
 # endfunction()
 
-# Chatgpt suggested
+
 function(wrap_python library_name sources)
-  #vtk_module_wrap_python(${library_name}Python generated_python_sources ${sources})
-  
-  # Correct usage from vtkModulesWrapPython.cmake
+  # Set the Python site-packages suffix for the wrapping
+  set(VTK_PYTHON_SITE_PACKAGES_SUFFIX "lib/site-packages")
+
   vtk_module_wrap_python(
     MODULES ${library_name}
     TARGET ${library_name}Python
     WRAPPED_MODULES generated_python_sources
-    INSTALL_HEADERS ON
+    INSTALL_HEADERS OFF
     PYTHON_PACKAGE "vtkmodules"
+    # CMAKE_DESTINATION ${VTK_PYTHON_SITE_PACKAGES_SUFFIX}
   )
 
   add_library(${library_name}PythonD ${generated_python_sources})
   add_library(${library_name}Python MODULE ${library_name}PythonInit.cxx)
-  
+
   target_link_libraries(${library_name}PythonD ${library_name})
   foreach(c ${VTK_LIBRARIES})
     target_link_libraries(${library_name}PythonD ${c}PythonD)
   endforeach(c)
   target_link_libraries(${library_name}Python ${library_name}PythonD)
-  
+
   set_target_properties(${library_name}Python PROPERTIES PREFIX "")
   if(WIN32 AND NOT CYGWIN)
     set_target_properties(${library_name}Python PROPERTIES SUFFIX ".pyd")

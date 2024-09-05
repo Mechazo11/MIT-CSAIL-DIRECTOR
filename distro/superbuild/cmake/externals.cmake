@@ -322,7 +322,7 @@ if(USE_SYSTEM_VTK)
     message(FATAL_ERROR "Director requires VTK version 9.0 or greater. "
       "System has VTK version ${VTK_VERSION}")
   endif()
-  check_vtk_qt_version()
+  # check_vtk_qt_version() # Experimental fix
 
   set(vtk_args -DVTK_DIR:PATH=${VTK_DIR})
 

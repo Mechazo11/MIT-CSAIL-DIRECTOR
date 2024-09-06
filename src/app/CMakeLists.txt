@@ -19,7 +19,7 @@ find_package(VTK REQUIRED COMPONENTS
   vtkIOImage
   vtkIOGeometry
   )
-include(${VTK_USE_FILE})
+include_directories(${VTK_INCLUDE_DIRS})
 check_vtk_qt_version()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -34,12 +34,13 @@ set(hdrs)
 set(decorator_file ${CMAKE_CURRENT_BINARY_DIR}/ddPythonQtDecorators.h)
 
 # Configure whether to use the QVTKWidget or the QVTKOpenGLWidget
-set(USE_QVTKWIDGET TRUE)
-if((${Qt5Core_VERSION} VERSION_GREATER "5.4.0") AND
-   (NOT ${VTK_VERSION} VERSION_LESS "8.0.0") AND
-   (${VTK_RENDERING_BACKEND} STREQUAL "OpenGL2"))
-  set(USE_QVTKWIDGET FALSE)
-endif()
+# set(USE_QVTKWIDGET TRUE)
+# if((${Qt5Core_VERSION} VERSION_GREATER "5.4.0") AND
+#    (NOT ${VTK_VERSION} VERSION_LESS "8.0.0") AND
+#    (${VTK_RENDERING_BACKEND} STREQUAL "OpenGL2"))
+#   set(USE_QVTKWIDGET FALSE)
+# endif()
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ddQVTKOpenGLWidgetConfigure.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/ddQVTKOpenGLWidgetConfigure.h)
 list(APPEND hdrs ${CMAKE_CURRENT_BINARY_DIR}/ddQVTKOpenGLWidgetConfigure.h)

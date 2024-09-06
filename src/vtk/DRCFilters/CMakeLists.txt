@@ -3,9 +3,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 find_package(OpenGL REQUIRED)
-
-find_package(VTK REQUIRED) # VTK should be found out here
-
+# find_package(VTK REQUIRED) # VTK should be found out here
 find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})
 

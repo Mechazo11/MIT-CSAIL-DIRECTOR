@@ -1,0 +1,16 @@
+NAME
+  vtkDRCFilters::vtkDRCFilters
+LIBRARY_NAME
+  vtkDRCFilters
+SPDX_LICENSE_IDENTIFIER
+  BSD-3-Clause
+SPDX_COPYRIGHT_TEXT
+  Copyright (c) Ken Martin, Will Schroeder, Bill Lorensen
+DEPENDS
+  VTK::CommonCore
+  VTK::InteractionWidgets
+  VTK::InteractionStyle
+  VTK::RenderingFreeType
+  VTK::RenderingCore
+  VTK::FiltersExtraction
+  VTK::FiltersCore

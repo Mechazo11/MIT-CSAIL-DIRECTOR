@@ -21,11 +21,12 @@ function(wrap_python library_name sources)
   # set(VTK_PYTHON_SITE_PACKAGES_SUFFIX "lib/site-packages")
 
   vtk_module_wrap_python(
+    MODULES ${sources}  
     TARGET ${library_name}Python
-    #MODULES ${library_name}
-    MODULES ${modules}
-    WRAPPED_MODULES generated_python_sources
-    INSTALL_HEADERS OFF
+    #MODULES ${modules}
+    #MODULES ${sources}
+    # WRAPPED_MODULES generated_python_sources
+    INSTALL_HEADERS ON
     PYTHON_PACKAGE ${library_name}
     MODULE_DESTINATION "lib/${library_name}"
     #CMAKE_DESTINATION ${VTK_PYTHON_SITE_PACKAGES_SUFFIX}

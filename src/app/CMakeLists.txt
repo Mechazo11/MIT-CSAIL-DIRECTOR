@@ -8,17 +8,31 @@ else()
   include_directories(${Qt5Core_INCLUDE_DIRS})
 endif()
 
+# find_package(VTK REQUIRED COMPONENTS
+#   vtkWrappingPythonCore
+#   vtkGUISupportQt
+#   vtkInteractionWidgets
+#   vtkRenderingAnnotation
+#   vtkRenderingFreeType
+#   vtkInteractionStyle
+#   vtkIOXML
+#   vtkIOImage
+#   vtkIOGeometry
+#   )
+
 find_package(VTK REQUIRED COMPONENTS
-  vtkWrappingPythonCore
-  vtkGUISupportQt
-  vtkInteractionWidgets
-  vtkRenderingAnnotation
-  vtkRenderingFreeType
-  vtkInteractionStyle
-  vtkIOXML
-  vtkIOImage
-  vtkIOGeometry
+  WrappingPythonCore
+  GUISupportQt
+  InteractionWidgets
+  RenderingAnnotation
+  RenderingFreeType
+  InteractionStyle
+  IOXML
+  IOImage
+  IOGeometry
   )
+
+
 include_directories(${VTK_INCLUDE_DIRS})
 check_vtk_qt_version()
 
